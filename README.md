@@ -27,3 +27,6 @@ http://127.0.0.1:8000/docs/
 - `sudo ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled`
 - `sudo nginx -t`
 - `sudo systemctl restart nginx`
+
+# Install redis-server
+- `sudo apt install redis-server`
