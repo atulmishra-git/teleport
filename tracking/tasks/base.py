@@ -1,12 +1,12 @@
 import random
-from customers.models import Customer
+import uuid
 from celery import shared_task
 from ..serializers import TrackerSerializer
 
 
-def generate_tacker_number(origin, dest, customer: Customer):
+def generate_tacker_number(origin, dest, customer_id: uuid.UUID):
     length = 16
-    tracker_number = f"{origin}{dest}{random.randint(1, 9999999)}{str(customer.id)[0:5]}"
+    tracker_number = f"{origin}{dest}{random.randint(1, 9999999)}{str(customer_id)[0:5]}"
     assert len(tracker_number) == length
     return tracker_number
 
@@ -20,7 +20,7 @@ def generate_tracker(data):
                 tracking_number=generate_tacker_number(
                     _data.validated_data['origin_country_id'],
                     _data.validated_data['destination_country_id'],
-                    _data.validated_data['customer']
+                    _data.validated_data['customer_id']
                 )
             )
             return saved.tracking_number, saved.created_at.isoformat()
