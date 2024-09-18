@@ -4,15 +4,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from .serializers import TrackerSerializer
 from .models import Tracker
-from customers.models import Customer
 from .tasks import generate_tracker
 
-
-def generate_tacker_number(origin, dest, customer: Customer):
-    length = 16
-    tracker_number = f"{origin}{dest}{random.randint(1, 9999999)}{str(customer.id)[0:5]}"
-    assert len(tracker_number) == length
-    return tracker_number
 
 
 class TrackerViewSet(ModelViewSet):
